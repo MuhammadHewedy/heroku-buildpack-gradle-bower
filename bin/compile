@@ -16,7 +16,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 SPRINTBOOT_STATIC_RES_DIR=$BUILD_DIR/src/main/resources/static/
 
-GRADLE_TASK=${GRADLE_TASK-stage}
+GRADLE_TASK=${GRADLE_TASK-build}
 
 print_env
 
@@ -35,21 +35,7 @@ PATH=$PATH:$node_dir/bin
 
 status  "Installing bower"
 npm --silent -g install bower
-
-cd $SPRINTBOOT_STATIC_RES_DIR
-
-status  "Installing npm dependencies"
-npm --silent install
-#npm will start bower as specified in angular package.json file
-
-if [ -e gulpfile.js ]; then
-
-  export gulp_run=$BUILD_DIR/node_modules/.bin/gulp
-
-  status "Running: $gulp_run"
-  $gulp_run --env=prod
-
-fi
+# gradle will run npm
 
 cd $BUILD_DIR
 
