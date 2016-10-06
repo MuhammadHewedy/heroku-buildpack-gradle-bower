@@ -14,12 +14,13 @@ LIB_DIR=$BP_DIR/lib
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
+SPRINTBOOT_STATIC_RES_DIR=$BUILD_DIR/src/main/resources/static/
 
 GRADLE_TASK=${GRADLE_TASK-stage}
 
 print_env
 
-vendored_node_version=0.10.25
+vendored_node_version=6.7.0
 node_dir=$CACHE_DIR/node
 bower_app=$node_dir/lib/node_modules/bower
 gulp_app=$node_dir/lib/node_modules/gulp
@@ -36,15 +37,16 @@ if [ ! -d $bower_app ]; then
     $node_dir/bin/npm --silent -g install bower
 fi
 
-export bower_run=$node_dir/bin/bower
+#export bower_run=$node_dir/bin/bower
 PATH=$PATH:$node_dir/bin
   
-cd $BUILD_DIR
-status "Running: $bower_run --allow-root install"
-$bower_run --allow-root install
+cd $SPRINTBOOT_STATIC_RES_DIR
+#status "Running: $bower_run --allow-root install"
+#$bower_run --allow-root install
 
 status  "Installing npm dependencies"
 $node_dir/bin/npm --silent install
+#npm will start bower as specified in angular package.json file
 
 if [ -e gulpfile.js ]; then
 
@@ -54,6 +56,8 @@ if [ -e gulpfile.js ]; then
   $gulp_run --env=prod
 
 fi
+
+cd $BUILD_DIR
 
 export_env_dir $ENV_DIR
 
