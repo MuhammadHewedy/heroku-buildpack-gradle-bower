@@ -33,6 +33,8 @@ fi
 
 echo $node_dir
 echo $node_dir/bin
+ls $node_dir/bin
+ls $node_dir/bin/npm
 
 if [ ! -d $bower_app ]; then
     status  "Installing bower"
