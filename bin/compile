@@ -31,10 +31,7 @@ if [ ! -d $node_dir ]; then
     curl -s http://s3pository.heroku.com/node/v$vendored_node_version/node-v$vendored_node_version-linux-x64.tar.gz | tar xfz - -C $node_dir --strip-components=1
 fi
 
-echo $node_dir
-echo $node_dir/bin
-ls $node_dir/bin
-ls $node_dir/bin/npm
+cat $node_dir/bin/npm
 
 if [ ! -d $bower_app ]; then
     status  "Installing bower"
